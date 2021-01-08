@@ -225,7 +225,7 @@ SOFTWARE.
 .. |GitHub license| image:: https://img.shields.io/github/license/mashape/apistatus.svg
    :target: http://opensource.org/licenses/MIT
 .. |travis status| image:: https://travis-ci.org/ssut/py-googletrans.svg?branch=master
-   :target: https://travis-ci.org/ssut/py-googletranslation
+   :target: https://travis-ci.org/Saravananslb/py-googletranslation
 .. |Documentation Status| image:: https://readthedocs.org/projects/py-googletrans/badge/?version=latest
   
 .. |PyPI version| image:: https://badge.fury.io/py/pygoogletranslation.svg
