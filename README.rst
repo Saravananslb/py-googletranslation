@@ -74,8 +74,8 @@ source language.
 
     >>> from pygoogletranslation import Translator
     >>> translator = Translator()
-    >>> translator.translate('안녕하세요.')
-    # <Translated src=ko dest=en text=Good evening. pronunciation=Good evening.>
+    >>> translator.translate('Good Morning', dest='ta')
+    # <Translated src=ko dest=ta text=காலை வணக்கம். pronunciation=Good evening.>
     >>> translator.translate('안녕하세요.', dest='ja')
     # <Translated src=ko dest=ja text=こんにちは。 pronunciation=Kon'nichiwa.>
     >>> translator.translate('veritas lux mea', src='la')
@@ -117,8 +117,8 @@ a given sentence.
 
     >>> from googletrans import Translator
     >>> translator = Translator()
-    >>> translator.detect('이 문장은 한글로 쓰여졌습니다.')
-    # <Detected lang=ko confidence=0.27041003>
+    >>> translator.detect('காலை வணக்கம்,')
+    # <Detected lang=ta confidence=0.72041003>
     >>> translator.detect('この文章は日本語で書かれました。')
     # <Detected lang=ja confidence=0.64889508>
     >>> translator.detect('This sentence is written in English.')
