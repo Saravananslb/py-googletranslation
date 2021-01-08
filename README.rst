@@ -6,7 +6,7 @@ https://pypi.org/project/pygoogletranslation/
 |GitHub license| |travis status| |Documentation Status| |PyPI version|
 |Coverage Status| |Code Climate|
 
-Googletrans is a **free** and **unlimited** python library that
+pygoogletranslation is a **free** and **unlimited** python library that
 implemented Google Translate API. This uses the `Google Translate Ajax
 API <https://translate.google.com>`__ to make calls to such methods as
 detect and translate.
@@ -111,7 +111,7 @@ a given sentence.
 
 .. code:: python
 
-    >>> from googletrans import Translator
+    >>> from pygoogletranslation import Translator
     >>> translator = Translator()
     >>> translator.detect('காலை வணக்கம்,')
     # <Detected lang=ta confidence=0.72041003>
