@@ -14,7 +14,7 @@ def format_querystring(token, text, src='auto', dest='en'):
         "sl": src,
         "tl": dest,
         "tk": token,
-        "q": [text]
+        "q": text
     }
     return querystring
 
