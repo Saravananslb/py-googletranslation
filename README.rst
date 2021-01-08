@@ -31,33 +31,23 @@ more features are coming soon.
 -  Proxy support
 -  Internal session management (for better bulk translations)
 
-HTTP/2 support
+Python Request Module
 ~~~~~~~~~~~~~~
 
-This library uses httpx for HTTP requests so HTTP/2 is supported by default.
+This library uses request to get an data from google.
 
-You can check if http2 is enabled and working by the `._response.http_version` of `Translated` or `Detected` object:
-
-.. code:: python
-
-   >>> translator.translate('테스트')._response.http_version
-   # 'HTTP/2'
+Request :
+   POST
+   GET
+   
 
 
 How does this library work
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You may wonder why this library works properly, whereas other
-approaches such like goslate won't work since Google has updated its
-translation service recently with a ticket mechanism to prevent a lot of
-crawler programs.
-
-I eventually figure out a way to generate a ticket by reverse
-engineering on the `obfuscated and minified code used by Google to
-generate such
-token <https://translate.google.com/translate/releases/twsfe_w_20170306_RC00/r/js/desktop_module_main.js>`__,
-and implemented on the top of Python. However, this could be blocked at
-any time.
+You may wonder how this library works properly, whereas other
+python translation package use the token mechanism but that is
+failling because google has changed their token mechanism.
 
 --------------
 
@@ -92,8 +82,7 @@ source language.
 Customize service URL
 ~~~~~~~~~~~~~~~~~~~~~
 
-You can use another google translate domain for translation. If multiple
-URLs are provided, it then randomly chooses a domain.
+You can use proxies in the translation.
 
 .. code:: python
 
@@ -109,7 +98,7 @@ for arrays as well.
 
 .. code:: python
 
-    >>> translations = translator.translate(['The quick brown fox', 'jumps over', 'the lazy dog'], dest='ko')
+    >>> translations = translator.translate('this is google translation' , dest='ta')
     >>> for translation in translations:
     ...    print(translation.origin, ' -> ', translation.text)
     # The quick brown fox  ->  빠른 갈색 여우
@@ -206,7 +195,7 @@ Contributions are more than welcomed. See
 License
 -------
 
-Googletrans is licensed under the MIT License. The terms are as
+pygoogletranslation is licensed under the MIT License. The terms are as
 follows:
 
 ::
