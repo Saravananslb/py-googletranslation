@@ -1,4 +1,4 @@
-pygoogletranslation
+PYGOOGLETRANSLATION
 ===========
 
 |GitHub license| |travis status| |Documentation Status| |PyPI version|
