@@ -1,37 +1,61 @@
-## Welcome to GitHub Pages
+## Welcome to PYGOOGLETRANSLATION
 
-You can use the [editor on GitHub](https://github.com/Saravananslb/py-googletranslation/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+You can use this library to translate your text. 
+pygoogletranslation is a **free** and **unlimited** python library that
+implemented Google Translate API. This uses the `Google Translate Ajax
+API <https://translate.google.com>`__ to make calls to such methods as
+detect and translate.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### Features
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+-  Fast and reliable - it uses the same servers that
+   translate.google.com uses
+-  Auto language detection
+-  Bulk translations
+-  Request
 
-```markdown
-Syntax highlighted code block
+Basic Usage
+-----------
 
-# Header 1
-## Header 2
-### Header 3
+If source language is not given, google translate attempts to detect the
+source language.
 
-- Bulleted
-- List
+.. code:: python
 
-1. Numbered
-2. List
+    >>> from pygoogletranslation import Translator
+    >>> translator = Translator()
+    >>> translator.translate('Good Morning', dest='ta')
+    # <Translated src=ko dest=ta text=காலை வணக்கம். pronunciation=Good evening.>
+    >>> translator.translate('안녕하세요.', dest='ja')
+    # <Translated src=ko dest=ja text=こんにちは。 pronunciation=Kon'nichiwa.>
+    >>> translator.translate('veritas lux mea', src='la')
+    # <Translated src=la dest=en text=The truth is my light pronunciation=The truth is my light>
 
-**Bold** and _Italic_ and `Code` text
+### Licence
 
-[Link](url) and ![Image](src)
-```
+pygoogletranslation is licensed under the MIT License. The terms are as
+follows:
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+::
+MIT License
 
-### Jekyll Themes
+Copyright (c) 2021 Saravananslb
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Saravananslb/py-googletranslation/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-### Support or Contact
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
