@@ -1,4 +1,4 @@
-# Contributing to this library are always welcome and highly encouraged :)
+# Contributing to this library are Welcome
 
 This is a guide for you to get some ideas~
 
