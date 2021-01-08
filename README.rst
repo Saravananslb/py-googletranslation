@@ -13,8 +13,6 @@ detect and translate.
 
 Compatible with Python 3.6+.
 
-For details refer to the `API
-Documentation <https://py-googletrans.readthedocs.io/en/latest>`__.
 
 Features
 --------
