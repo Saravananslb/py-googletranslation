@@ -225,12 +225,12 @@ SOFTWARE.
 .. |GitHub license| image:: https://img.shields.io/github/license/mashape/apistatus.svg
    :target: http://opensource.org/licenses/MIT
 .. |travis status| image:: https://travis-ci.org/ssut/py-googletrans.svg?branch=master
-   :target: https://travis-ci.org/ssut/py-googletrans
+   :target: https://travis-ci.org/ssut/py-googletranslation
 .. |Documentation Status| image:: https://readthedocs.org/projects/py-googletrans/badge/?version=latest
-   :target: https://readthedocs.org/projects/py-googletrans/?badge=latest
+  
 .. |PyPI version| image:: https://badge.fury.io/py/pygoogletranslation.svg
-   :target: http://badge.fury.io/py/googletrans
+   :target: http://badge.fury.io/py/pygoogletranslation
 .. |Coverage Status| image:: https://coveralls.io/repos/github/ssut/py-googletrans/badge.svg
-   :target: https://coveralls.io/github/ssut/py-googletrans
+   
 .. |Code Climate| image:: https://codeclimate.com/github/ssut/py-googletrans/badges/gpa.svg
-   :target: https://codeclimate.com/github/ssut/py-googletrans
+   
