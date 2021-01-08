@@ -230,7 +230,7 @@ SOFTWARE.
    :target: https://travis-ci.org/ssut/py-googletrans
 .. |Documentation Status| image:: https://readthedocs.org/projects/py-googletrans/badge/?version=latest
    :target: https://readthedocs.org/projects/py-googletrans/?badge=latest
-.. |PyPI version| image:: https://badge.fury.io/py/googletrans.svg
+.. |PyPI version| image:: https://badge.fury.io/py/pygoogletranslation.svg
    :target: http://badge.fury.io/py/googletrans
 .. |Coverage Status| image:: https://coveralls.io/repos/github/ssut/py-googletrans/badge.svg
    :target: https://coveralls.io/github/ssut/py-googletrans
