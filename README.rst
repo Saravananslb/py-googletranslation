@@ -1,5 +1,5 @@
 PYGOOGLETRANSLATION
-===========
+===================
 
 https://pypi.org/project/pygoogletranslation/
 
