@@ -31,6 +31,34 @@ source language.
     # <Translated src=ko dest=ja text=こんにちは。 pronunciation=Kon'nichiwa.>
     >>> translator.translate('veritas lux mea', src='la')
     # <Translated src=la dest=en text=The truth is my light pronunciation=The truth is my light>
+    
+    
+Token Generation
+-----------------
+
+Google Translate API token generator
+
+    translate.google.com uses a token to authorize the requests. If you are
+    not Google, you do have this token and will have to pay for use.
+    This class is the result of reverse engineering on the obfuscated and
+    minified code used by Google to generate such token.
+
+    The token is based on a seed which is updated once per hour and on the
+    text that will be translated.
+    Both are combined - by some strange math - in order to generate a final
+    token (e.g. 464393.115905) which is used by the API to validate the
+    request.
+
+    This operation will cause an additional request to get an initial
+    token from translate.google.com.
+
+    Example usage:
+        >>> from pygoogletranslation.gauthtoken import TokenAcquirer
+        >>> acquirer = TokenAcquirer()
+        >>> text = 'test'
+        >>> tk = acquirer.do(text)
+        >>> tk
+        464393.115905
 
 ### Licence
 
