@@ -98,12 +98,10 @@ for arrays as well.
 
 .. code:: python
 
-    >>> translations = translator.translate('this is google translation' , dest='ta')
+    >>> translations = translator.translate(['this is google translation', 'Tamil language' ], dest='ta')
     >>> for translation in translations:
     ...    print(translation.origin, ' -> ', translation.text)
-    # The quick brown fox  ->  빠른 갈색 여우
-    # jumps over  ->  이상 점프
-    # the lazy dog  ->  게으른 개
+    
 
 Language detection
 ~~~~~~~~~~~~~~~~~~
