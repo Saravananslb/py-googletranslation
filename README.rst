@@ -1,6 +1,8 @@
 PYGOOGLETRANSLATION
 ===========
 
+https://pypi.org/project/pygoogletranslation/
+
 |GitHub license| |travis status| |Documentation Status| |PyPI version|
 |Coverage Status| |Code Climate|
 
