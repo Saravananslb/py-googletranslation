@@ -121,6 +121,14 @@ a given sentence.
     # <Detected lang=en confidence=0.22348526>
     >>> translator.detect('Tiu frazo estas skribita en Esperanto.')
     # <Detected lang=eo confidence=0.10538048>
+    
+Translation from document (.doc, .pdf, .txt):
+---------------------------------------------
+    >>> from pygoogletranslation import Translator
+    >>> translator = Translator()
+    >>> translator.bulktranslate('test.txt', dest="ta")
+    # <bulk translated text>
+
 
 pygoogletranslation to get Language and Language Codes
 -------------------------------------------------------
