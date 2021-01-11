@@ -369,7 +369,7 @@ Note on library usage
 DISCLAIMER: this is an unofficial library using the web API of translate.google.com
 and also is not associated with Google.
 
--  **The maximum character limit on a single text is 15k.**
+-  **Unlimited Translation**
 
 -  Due to limitations of the web version of google translate, this API
    does not guarantee that the library would work properly at all times
