@@ -17,7 +17,7 @@ Compatible with Python 3.6+.
 Features
 --------
 
--  Translation from file (.doc, .pdf, .txt)
+-  Translation from file (.doc, .docx, .pdf, .txt)
 -  Fast and reliable - it uses the same servers that
    translate.google.com uses
 -  Auto language detection
@@ -123,7 +123,7 @@ a given sentence.
     >>> translator.detect('Tiu frazo estas skribita en Esperanto.')
     # <Detected lang=eo confidence=0.10538048>
     
-Translation from document (.doc, .pdf, .txt):
+Translation from document (.doc, .docx, .pdf, .txt):
 ---------------------------------------------
     >>> from pygoogletranslation import Translator
     >>> translator = Translator()
