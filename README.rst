@@ -17,6 +17,7 @@ Compatible with Python 3.6+.
 Features
 --------
 
+-  Translation from file (.doc, .pdf, .txt)
 -  Fast and reliable - it uses the same servers that
    translate.google.com uses
 -  Auto language detection
