@@ -57,8 +57,8 @@ failling because google has changed their token mechanism.
 Installation
 ------------
 
-To install, either use things like pip with the package "googletrans"
-or download the package and put the "googletrans" directory into your
+To install, either use things like pip with the package "pygoogletranslation"
+or download the package and put the "pygoogletranslation" directory into your
 python path.
 
 .. code:: bash
