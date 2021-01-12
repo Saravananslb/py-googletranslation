@@ -6,6 +6,8 @@ https://pypi.org/project/pygoogletranslation/
 |GitHub license| |travis status| |Documentation Status| |PyPI version|
 |Coverage Status| |Code Climate|
 
+**Unlimited Text Translation** (no limitation)
+
 pygoogletranslation is a **free** and **unlimited** python library that
 implemented Google Translate API. This uses the `Google Translate Ajax
 API <https://translate.google.com>`__ to make calls to such methods as
@@ -129,6 +131,14 @@ Translation from document (.doc, .docx, .pdf, .txt):
     >>> translator = Translator()
     >>> translator.bulktranslate('test.txt', dest="ta")
     # <bulk translated text>
+    # for bulk translation, sometimes you might get an error with response
+    # code "429" - Too Many attempts.
+    # To overcome this error, add below parameter.
+    >>> translator = Translator(retry=NO_OF_ATTEMPTS, sleep=WAIT_SECONDS, retry_message=TRUE)
+    >>> translator.bulktranslate('test.txt', dest="ta")
+    # retry - no of attemps (default- 3 times)
+    # sleep - no of attempts after seconds (default- 5 seconds)
+    # retry_message - True - display retrying message (default- False)
 
 
 pygoogletranslation to get Language and Language Codes
@@ -370,7 +380,7 @@ Note on library usage
 DISCLAIMER: this is an unofficial library using the web API of translate.google.com
 and also is not associated with Google.
 
--  **Unlimited Translation**
+-  
 
 -  Due to limitations of the web version of google translate, this API
    does not guarantee that the library would work properly at all times
