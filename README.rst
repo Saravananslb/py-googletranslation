@@ -102,8 +102,11 @@ for arrays as well.
 .. code:: python
 
     >>> translations = translator.translate(['this is google translation', 'Tamil language' ], dest='ta')
-    >>> for translation in translations:
-    ...    print(translation.origin, ' -> ', translation.text)
+    >>> t = (trans.translate(["Good ' Morning", "India"], dest="ta"))
+    >>> for _t in t:
+    >>>     print(_t.text)
+    # காலை வணக்கம்
+    # இந்தியா
     
 
 Language detection
