@@ -3,9 +3,6 @@ PYGOOGLETRANSLATION
 
 https://pypi.org/project/pygoogletranslation/
 
-|GitHub license| |travis status| |Documentation Status| |PyPI version|
-|Coverage Status| |Code Climate|
-
 **Unlimited Text Translation** (no limitation)
 
 pygoogletranslation is a **free** and **unlimited** python library that
@@ -441,17 +438,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-.. |GitHub license| image:: https://img.shields.io/github/license/mashape/apistatus.svg
-   :target: http://opensource.org/licenses/MIT
-.. |travis status| image:: https://travis-ci.org/ssut/py-googletrans.svg?branch=master
-   :target: https://travis-ci.org/Saravananslb/py-googletranslation
-.. |Documentation Status| image:: https://readthedocs.org/projects/py-googletrans/badge/?version=latest
-  
-.. |PyPI version| image:: https://badge.fury.io/py/pygoogletranslation.svg
-   :target: http://badge.fury.io/py/pygoogletranslation
-.. |Coverage Status| image:: https://coveralls.io/repos/github/ssut/py-googletrans/badge.svg
-   
-.. |Code Climate| image:: https://codeclimate.com/github/ssut/py-googletrans/badges/gpa.svg
    
