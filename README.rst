@@ -82,7 +82,7 @@ source language.
     >>> translator.translate('veritas lux mea', src='la')
     # <Translated src=la dest=en text=The truth is my light pronunciation=The truth is my light>
 
-Customize service URL
+Customize proxy URL
 ~~~~~~~~~~~~~~~~~~~~~
 
 You can use proxies in the translation.
