@@ -1,19 +1,69 @@
-## Welcome to PYGOOGLETRANSLATION
+PYGOOGLETRANSLATION
+===================
 
-You can use this library to translate your text. 
+https://pypi.org/project/pygoogletranslation/
+
+|GitHub license| |travis status| |Documentation Status| |PyPI version|
+|Coverage Status| |Code Climate|
+
+**Unlimited Text Translation** (no limitation)
+
 pygoogletranslation is a **free** and **unlimited** python library that
 implemented Google Translate API. This uses the `Google Translate Ajax
 API <https://translate.google.com>`__ to make calls to such methods as
 detect and translate.
 
+Compatible with Python 3.6+.
 
-### Features
 
+Features
+--------
+
+-  Translation from file (.doc, .docx, .pdf, .txt)
 -  Fast and reliable - it uses the same servers that
    translate.google.com uses
 -  Auto language detection
 -  Bulk translations
 -  Request
+
+TODO
+~~~~
+
+more features are coming soon.
+
+-  Proxy support
+-  Internal session management (for better bulk translations)
+
+Python Request Module
+~~~~~~~~~~~~~~
+
+This library uses request to get an data from google.
+
+Request :
+   POST
+   GET
+   
+
+
+How does this library work
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You may wonder how this library works properly, whereas other
+python translation package use the token mechanism but that is
+failling because google has changed their token mechanism.
+
+--------------
+
+Installation
+------------
+
+To install, either use things like pip with the package "pygoogletranslation"
+or download the package and put the "pygoogletranslation" directory into your
+python path.
+
+.. code:: bash
+
+    $ pip install pygoogletranslation
 
 Basic Usage
 -----------
@@ -31,36 +81,340 @@ source language.
     # <Translated src=ko dest=ja text=こんにちは。 pronunciation=Kon'nichiwa.>
     >>> translator.translate('veritas lux mea', src='la')
     # <Translated src=la dest=en text=The truth is my light pronunciation=The truth is my light>
+
+Customize service URL
+~~~~~~~~~~~~~~~~~~~~~
+
+You can use proxies in the translation.
+
+.. code:: python
+
+    >>> from pygoogletranslation import Translator
+    >>> translator = Translator(proxies=YOUR_PROXIES)
+
+Advanced Usage (Bulk)
+~~~~~~~~~~~~~~~~~~~~~
+
+Array can be used to translate a batch of strings in a single method
+call and a single HTTP session. The exact same method shown above works
+for arrays as well.
+
+.. code:: python
+
+    >>> translations = translator.translate(['this is google translation', 'Tamil language' ], dest='ta')
+    >>> t = (trans.translate(["Good ' Morning", "India"], dest="ta"))
+    >>> for _t in t:
+    >>>     print(_t.text)
+    # காலை வணக்கம்
+    # இந்தியா
     
+
+Language detection
+~~~~~~~~~~~~~~~~~~
+
+The detect method, as its name implies, identifies the language used in
+a given sentence.
+
+.. code:: python
+
+    >>> from pygoogletranslation import Translator
+    >>> translator = Translator()
+    >>> translator.detect('காலை வணக்கம்,')
+    # <Detected lang=ta confidence=0.72041003>
+    >>> translator.detect('この文章は日本語で書かれました。')
+    # <Detected lang=ja confidence=0.64889508>
+    >>> translator.detect('This sentence is written in English.')
+    # <Detected lang=en confidence=0.22348526>
+    >>> translator.detect('Tiu frazo estas skribita en Esperanto.')
+    # <Detected lang=eo confidence=0.10538048>
     
-Token Generation
------------------
+Translation from document (.doc, .docx, .pdf, .txt):
+---------------------------------------------
+    >>> from pygoogletranslation import Translator
+    >>> translator = Translator()
+    >>> translator.bulktranslate('test.txt', dest="ta")
+    # <bulk translated text>
+    # for bulk translation, sometimes you might get an error with response
+    # code "429" - Too Many attempts.
+    # To overcome this error, add below parameter.
+    >>> translator = Translator(retry=NO_OF_ATTEMPTS, sleep=WAIT_SECONDS, retry_message=TRUE)
+    >>> translator.bulktranslate('test.txt', dest="ta")
+    # retry - no of attemps (default- 3 times)
+    # sleep - no of attempts after seconds (default- 5 seconds)
+    # retry_message - True - display retrying message (default- False)
 
-Google Translate API token generator
 
-    translate.google.com uses a token to authorize the requests. If you are
-    not Google, you do have this token and will have to pay for use.
-    This class is the result of reverse engineering on the obfuscated and
-    minified code used by Google to generate such token.
+pygoogletranslation to get Language and Language Codes
+-------------------------------------------------------
+               >>> from pygoogletranslation import Translator
+               >>> translator = Translator()
+               >>> translator.glanguage()
+               >>> {
+                  "sl": {
+                  "auto": "Detect language",
+                  "af": "Afrikaans",
+                  "sq": "Albanian",
+                  "am": "Amharic",
+                  "ar": "Arabic",
+                  "hy": "Armenian",
+                  "az": "Azerbaijani",
+                  "eu": "Basque",
+                  "be": "Belarusian",
+                  "bn": "Bengali",
+                  "bs": "Bosnian",
+                  "bg": "Bulgarian",
+                  "ca": "Catalan",
+                  "ceb": "Cebuano",
+                  "ny": "Chichewa",
+                  "zh-CN": "Chinese",
+                  "co": "Corsican",
+                  "hr": "Croatian",
+                  "cs": "Czech",
+                  "da": "Danish",
+                  "nl": "Dutch",
+                  "en": "English",
+                  "eo": "Esperanto",
+                  "et": "Estonian",
+                  "tl": "Filipino",
+                  "fi": "Finnish",
+                  "fr": "French",
+                  "fy": "Frisian",
+                  "gl": "Galician",
+                  "ka": "Georgian",
+                  "de": "German",
+                  "el": "Greek",
+                  "gu": "Gujarati",
+                  "ht": "Haitian Creole",
+                  "ha": "Hausa",
+                  "haw": "Hawaiian",
+                  "iw": "Hebrew",
+                  "hi": "Hindi",
+                  "hmn": "Hmong",
+                  "hu": "Hungarian",
+                  "is": "Icelandic",
+                  "ig": "Igbo",
+                  "id": "Indonesian",
+                  "ga": "Irish",
+                  "it": "Italian",
+                  "ja": "Japanese",
+                  "jw": "Javanese",
+                  "kn": "Kannada",
+                  "kk": "Kazakh",
+                  "km": "Khmer",
+                  "rw": "Kinyarwanda",
+                  "ko": "Korean",
+                  "ku": "Kurdish (Kurmanji)",
+                  "ky": "Kyrgyz",
+                  "lo": "Lao",
+                  "la": "Latin",
+                  "lv": "Latvian",
+                  "lt": "Lithuanian",
+                  "lb": "Luxembourgish",
+                  "mk": "Macedonian",
+                  "mg": "Malagasy",
+                  "ms": "Malay",
+                  "ml": "Malayalam",
+                  "mt": "Maltese",
+                  "mi": "Maori",
+                  "mr": "Marathi",
+                  "mn": "Mongolian",
+                  "my": "Myanmar (Burmese)",
+                  "ne": "Nepali",
+                  "no": "Norwegian",
+                  "or": "Odia (Oriya)",
+                  "ps": "Pashto",
+                  "fa": "Persian",
+                  "pl": "Polish",
+                  "pt": "Portuguese",
+                  "pa": "Punjabi",
+                  "ro": "Romanian",
+                  "ru": "Russian",
+                  "sm": "Samoan",
+                  "gd": "Scots Gaelic",
+                  "sr": "Serbian",
+                  "st": "Sesotho",
+                  "sn": "Shona",
+                  "sd": "Sindhi",
+                  "si": "Sinhala",
+                  "sk": "Slovak",
+                  "sl": "Slovenian",
+                  "so": "Somali",
+                  "es": "Spanish",
+                  "su": "Sundanese",
+                  "sw": "Swahili",
+                  "sv": "Swedish",
+                  "tg": "Tajik",
+                  "ta": "Tamil",
+                  "tt": "Tatar",
+                  "te": "Telugu",
+                  "th": "Thai",
+                  "tr": "Turkish",
+                  "tk": "Turkmen",
+                  "uk": "Ukrainian",
+                  "ur": "Urdu",
+                  "ug": "Uyghur",
+                  "uz": "Uzbek",
+                  "vi": "Vietnamese",
+                  "cy": "Welsh",
+                  "xh": "Xhosa",
+                  "yi": "Yiddish",
+                  "yo": "Yoruba",
+                  "zu": "Zulu"
+                  },
+                  "tl": {
+                  "af": "Afrikaans",
+                  "sq": "Albanian",
+                  "am": "Amharic",
+                  "ar": "Arabic",
+                  "hy": "Armenian",
+                  "az": "Azerbaijani",
+                  "eu": "Basque",
+                  "be": "Belarusian",
+                  "bn": "Bengali",
+                  "bs": "Bosnian",
+                  "bg": "Bulgarian",
+                  "ca": "Catalan",
+                  "ceb": "Cebuano",
+                  "ny": "Chichewa",
+                  "zh-CN": "Chinese (Simplified)",
+                  "zh-TW": "Chinese (Traditional)",
+                  "co": "Corsican",
+                  "hr": "Croatian",
+                  "cs": "Czech",
+                  "da": "Danish",
+                  "nl": "Dutch",
+                  "en": "English",
+                  "eo": "Esperanto",
+                  "et": "Estonian",
+                  "tl": "Filipino",
+                  "fi": "Finnish",
+                  "fr": "French",
+                  "fy": "Frisian",
+                  "gl": "Galician",
+                  "ka": "Georgian",
+                  "de": "German",
+                  "el": "Greek",
+                  "gu": "Gujarati",
+                  "ht": "Haitian Creole",
+                  "ha": "Hausa",
+                  "haw": "Hawaiian",
+                  "iw": "Hebrew",
+                  "hi": "Hindi",
+                  "hmn": "Hmong",
+                  "hu": "Hungarian",
+                  "is": "Icelandic",
+                  "ig": "Igbo",
+                  "id": "Indonesian",
+                  "ga": "Irish",
+                  "it": "Italian",
+                  "ja": "Japanese",
+                  "jw": "Javanese",
+                  "kn": "Kannada",
+                  "kk": "Kazakh",
+                  "km": "Khmer",
+                  "rw": "Kinyarwanda",
+                  "ko": "Korean",
+                  "ku": "Kurdish (Kurmanji)",
+                  "ky": "Kyrgyz",
+                  "lo": "Lao",
+                  "la": "Latin",
+                  "lv": "Latvian",
+                  "lt": "Lithuanian",
+                  "lb": "Luxembourgish",
+                  "mk": "Macedonian",
+                  "mg": "Malagasy",
+                  "ms": "Malay",
+                  "ml": "Malayalam",
+                  "mt": "Maltese",
+                  "mi": "Maori",
+                  "mr": "Marathi",
+                  "mn": "Mongolian",
+                  "my": "Myanmar (Burmese)",
+                  "ne": "Nepali",
+                  "no": "Norwegian",
+                  "or": "Odia (Oriya)",
+                  "ps": "Pashto",
+                  "fa": "Persian",
+                  "pl": "Polish",
+                  "pt": "Portuguese",
+                  "pa": "Punjabi",
+                  "ro": "Romanian",
+                  "ru": "Russian",
+                  "sm": "Samoan",
+                  "gd": "Scots Gaelic",
+                  "sr": "Serbian",
+                  "st": "Sesotho",
+                  "sn": "Shona",
+                  "sd": "Sindhi",
+                  "si": "Sinhala",
+                  "sk": "Slovak",
+                  "sl": "Slovenian",
+                  "so": "Somali",
+                  "es": "Spanish",
+                  "su": "Sundanese",
+                  "sw": "Swahili",
+                  "sv": "Swedish",
+                  "tg": "Tajik",
+                  "ta": "Tamil",
+                  "tt": "Tatar",
+                  "te": "Telugu",
+                  "th": "Thai",
+                  "tr": "Turkish",
+                  "tk": "Turkmen",
+                  "uk": "Ukrainian",
+                  "ur": "Urdu",
+                  "ug": "Uyghur",
+                  "uz": "Uzbek",
+                  "vi": "Vietnamese",
+                  "cy": "Welsh",
+                  "xh": "Xhosa",
+                  "yi": "Yiddish",
+                  "yo": "Yoruba",
+                  "zu": "Zulu"
+                  },
+                  "al": {}
+                  }
 
-    The token is based on a seed which is updated once per hour and on the
-    text that will be translated.
-    Both are combined - by some strange math - in order to generate a final
-    token (e.g. 464393.115905) which is used by the API to validate the
-    request.
+--------------
 
-    This operation will cause an additional request to get an initial
-    token from translate.google.com.
+Note on library usage
+---------------------
 
-    Example usage:
-        >>> from pygoogletranslation.gauthtoken import TokenAcquirer
-        >>> acquirer = TokenAcquirer()
-        >>> text = 'test'
-        >>> tk = acquirer.do(text)
-        >>> tk
-        464393.115905
+DISCLAIMER: this is an unofficial library using the web API of translate.google.com
+and also is not associated with Google.
 
-### Licence
+-  
+
+-  Due to limitations of the web version of google translate, this API
+   does not guarantee that the library would work properly at all times
+   (so please use this library if you don't care about stability).
+
+-  **Important:** If you want to use a stable API, I highly recommend you to use
+   `Google's official translate
+   API <https://cloud.google.com/translate/docs>`__.
+
+-  If you get HTTP 5xx error or errors like #6, it's probably because
+   Google has banned your client IP address.
+
+--------------
+
+Versioning
+----------
+
+This library follows `Semantic Versioning <http://semver.org/>`__ from
+v2.0.0. Any release versioned 0.x.y is subject to backwards incompatible
+changes at any time.
+
+Contributing
+-------------------------
+
+Contributions are more than welcomed. See
+`CONTRIBUTING.md <CONTRIBUTING.md>`__
+
+-----------------------------------------
+
+License
+-------
 
 pygoogletranslation is licensed under the MIT License. The terms are as
 follows:
@@ -87,3 +441,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+.. |GitHub license| image:: https://img.shields.io/github/license/mashape/apistatus.svg
+   :target: http://opensource.org/licenses/MIT
+.. |travis status| image:: https://travis-ci.org/ssut/py-googletrans.svg?branch=master
+   :target: https://travis-ci.org/Saravananslb/py-googletranslation
+.. |Documentation Status| image:: https://readthedocs.org/projects/py-googletrans/badge/?version=latest
+  
+.. |PyPI version| image:: https://badge.fury.io/py/pygoogletranslation.svg
+   :target: http://badge.fury.io/py/pygoogletranslation
+.. |Coverage Status| image:: https://coveralls.io/repos/github/ssut/py-googletrans/badge.svg
+   
+.. |Code Climate| image:: https://codeclimate.com/github/ssut/py-googletrans/badges/gpa.svg
+   
