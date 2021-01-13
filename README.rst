@@ -71,6 +71,7 @@ Basic Usage
 If source language is not given, google translate attempts to detect the
 source language.
 
+
 .. code:: python
 
     >>> from pygoogletranslation import Translator
