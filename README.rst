@@ -100,9 +100,9 @@ call and a single HTTP session. The exact same method shown above works
 for arrays as well.
 
 .. code:: python
-
-    >>> translations = translator.translate(['this is google translation', 'Tamil language' ], dest='ta')
-    >>> t = (trans.translate(["Good ' Morning", "India"], dest="ta"))
+    >>> from pygoogletranslation import Translator
+    >>> translator = Translator()
+    >>> t = (translator.translate(["Good ' Morning", "India"], dest="ta"))
     >>> for _t in t:
     >>>     print(_t.text)
     # காலை வணக்கம்
