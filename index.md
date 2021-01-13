@@ -80,7 +80,7 @@ source language.
     # <Translated src=la dest=en text=The truth is my light pronunciation=The truth is my light>
 
 Customize service URL
-~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 You can use proxies in the translation.
 
@@ -90,7 +90,7 @@ You can use proxies in the translation.
     >>> translator = Translator(proxies=YOUR_PROXIES)
 
 Advanced Usage (Bulk)
-~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Array can be used to translate a batch of strings in a single method
 call and a single HTTP session. The exact same method shown above works
@@ -107,7 +107,7 @@ for arrays as well.
     
 
 Language detection
-~~~~~~~~~~~~~~~~~~
+------------------
 
 The detect method, as its name implies, identifies the language used in
 a given sentence.
@@ -126,7 +126,7 @@ a given sentence.
     # <Detected lang=eo confidence=0.10538048>
     
 Translation from document (.doc, .docx, .pdf, .txt):
----------------------------------------------
+---------------------------------------------------
     >>> from pygoogletranslation import Translator
     >>> translator = Translator()
     >>> translator.bulktranslate('test.txt', dest="ta")
@@ -401,14 +401,6 @@ Versioning
 This library follows `Semantic Versioning <http://semver.org/>`__ from
 v2.0.0. Any release versioned 0.x.y is subject to backwards incompatible
 changes at any time.
-
-Contributing
--------------------------
-
-Contributions are more than welcomed. See
-`CONTRIBUTING.md <CONTRIBUTING.md>`__
-
------------------------------------------
 
 License
 -------
