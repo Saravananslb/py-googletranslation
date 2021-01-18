@@ -21,9 +21,9 @@ class Translated:
     def __unicode__(self):  # pragma: nocover
         return (
             u'Translated(src={src}, dest={dest}, text={text}, pronunciation={pronunciation}, '
-            u'extra_data={extra_data})'.format(
+            u'original_text={origin} ,extra_data={extra_data})'.format(
                 src=self.src, dest=self.dest, text=self.text,
-                pronunciation=self.pronunciation,
+                pronunciation=self.pronunciation, origin=self.origin,
                 extra_data='"' + repr(self.extra_data)[:10] + '..."'
             )
         )

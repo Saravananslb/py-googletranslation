@@ -1,3 +1,4 @@
+RPCIDS = 'MkEWBc'
 
 LANGUAGES = {
     'af': 'afrikaans',
