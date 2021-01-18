@@ -28,9 +28,12 @@ def get_description():
     description, = re.findall(pattern, init_py, re.DOTALL)
     return description
 
+this_directory = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
-def get_readme():
-    return get_file(os.path.dirname(__file__), 'README.rst')
+# def get_readme():
+#     return get_file(os.path.dirname(__file__), 'README.rst')
 
 
 def install():
@@ -38,7 +41,8 @@ def install():
         name='pygoogletranslation',
         version=get_version(),
         description=get_description(),
-        long_description=get_readme(),
+        long_description=long_description,
+        long_description_content_type='text/markdown',
         license='MIT',
         author='Saravanan N, Jenifer Singh Y S',
         author_email='saravananslb2015@gmail.com',
@@ -57,6 +61,10 @@ def install():
         keywords='google translate translator',
         install_requires=[
             'requests',
+            'unidecode',
+            'nltk',
+            'docx2txt',
+            'PyPDF2',
         ],
         python_requires= '>=3.6',
         tests_require=[
