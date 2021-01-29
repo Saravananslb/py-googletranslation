@@ -31,10 +31,10 @@ def format_querystring(token, text, src='auto', dest='en'):
 def format_param(rpcids):
     params = {
         'rpcids': rpcids,
-        'bl': 'boq_translate-webserver_20201207.13_p0', 
-        'soc-app': 1, 
-        'soc-platform': 1, 
-        'soc-device': 1, 
+        'bl': 'boq_translate-webserver_20201207.13_p0',
+        'soc-app': 1,
+        'soc-platform': 1,
+        'soc-device': 1,
         'rt': 'c'
     }
     return params
@@ -59,11 +59,15 @@ def format_response(a):
             flag = not flag
             _b = 'pygoogletranslation'
         if flag:
+            # Code cleanup
+            _b = _b.replace('\\n', '')
+            _b = _b.replace('\\\\', '\\')
+            _b = _b.replace('\\"', '"')
             li_filter.append(_b)
-    fi_data = str(''.join(li_filter)).replace('"[', '[').replace(']"', ']').replace('\\n', '').replace('\\','')    
-    li_data = json.loads(fi_data.split('pygoogletranslation')[1].replace('"[', '[').replace(']"', ']'))
+    fi_data = str(''.join(li_filter)).replace('","[', '",[').replace(']",null', '],null')
+    li_data = json.loads(fi_data.rsplit('pygoogletranslation', 1)[-1])
     return li_data
-    
+
 def tokenize_sentence(text):
     text_len = 0
     token_text = ''
@@ -138,4 +142,3 @@ def fix_trans_error(translated):
     else:
         text = translated
     return str(text)
-
