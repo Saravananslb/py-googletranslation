@@ -60,12 +60,28 @@ def format_response(a):
             _b = 'pygoogletranslation'
         if flag:
             # Code cleanup
-            _b = _b.replace('\\n', '')
             _b = _b.replace('\\\\', '\\')
+            _b = _b.replace('\\ ', ' ')
+            _b = _b.replace('\\n', '\n')
             _b = _b.replace('\\"', '"')
+
+
+            if '\\u' in _b:
+                _bp = ''
+                p = 0
+                while p < len(_b):
+                    if _b[p:p+2] == '\\u':
+                        _bp += bytes(_b[p:p+6], 'ascii').decode('unicode-escape')
+                        p += 6
+                    else:
+                        _bp += _b[p:p+1]
+                        p += 1
+                _b = _bp
+
             li_filter.append(_b)
-    fi_data = str(''.join(li_filter)).replace('","[', '",[', 1).replace(']",null', '],null')
-    li_data = json.loads(fi_data.rsplit('pygoogletranslation', 1)[-1])
+
+    fi_data = str(''.join(li_filter)).replace('","[', '",[', 1).replace('\n",null', '\n,null')
+    li_data = json.loads(fi_data.split('pygoogletranslation')[1], strict=False)
     return li_data
 
 def tokenize_sentence(text):
@@ -94,13 +110,19 @@ def format_translation(translated):
     pron = ''
     for _translated in translated:
         try:
-            text += _translated[0][2][1][0][0][5][0][0]
+            if len(_translated[0][2][1][0][0][5]) > 1:
+                for phrase in _translated[0][2][1][0][0][5]:
+                    text += ' ' + phrase[0]
+            else:
+                text += _translated[0][2][1][0][0][5][0][0]
         except:
             text += fix_trans_error(_translated)
         try:
             pron += unidecode.unidecode(_translated[0][2][1][0][0][1])
         except:
             pron += ''
+
+    text = text.strip()
 
     for _translated in translated:
         try:
