@@ -31,10 +31,10 @@ def format_querystring(token, text, src='auto', dest='en'):
 def format_param(rpcids):
     params = {
         'rpcids': rpcids,
-        'bl': 'boq_translate-webserver_20201207.13_p0', 
-        'soc-app': 1, 
-        'soc-platform': 1, 
-        'soc-device': 1, 
+        'bl': 'boq_translate-webserver_20201207.13_p0',
+        'soc-app': 1,
+        'soc-platform': 1,
+        'soc-device': 1,
         'rt': 'c'
     }
     return params
@@ -59,11 +59,34 @@ def format_response(a):
             flag = not flag
             _b = 'pygoogletranslation'
         if flag:
+            # Parsing to cleanup "unescaped escaped" characters
+            if '\\' in _b:
+                _bp = ''
+                p = 0
+                while p < len(_b):
+                    if _b[p:p+2] == '\\\\':
+                        _bp += '\\'
+                        p += 2
+                    elif _b[p:p+1] == '\\':
+                        if _b[p:p+2] == '\\u':
+                            _bp += bytes(_b[p:p+6], 'ascii').decode('unicode-escape')
+                            p += 6
+                        elif _b[p:p+2] == '\\n':
+                            _bp += '\n'
+                            p += 2
+                        else:
+                            p += 1
+                    else:
+                        _bp += _b[p:p+1]
+                        p += 1
+                _b = _bp
+
             li_filter.append(_b)
-    fi_data = str(''.join(li_filter)).replace('"[', '[').replace(']"', ']').replace('\\n', '').replace('\\','')    
-    li_data = json.loads(fi_data.split('pygoogletranslation')[1].replace('"[', '[').replace(']"', ']'))
+
+    fi_data = str(''.join(li_filter)).replace('","[', '",[', 1).replace('\n",null', '\n,null')
+    li_data = json.loads(fi_data.split('pygoogletranslation')[1], strict=False)
     return li_data
-    
+
 def tokenize_sentence(text):
     text_len = 0
     token_text = ''
@@ -90,13 +113,19 @@ def format_translation(translated):
     pron = ''
     for _translated in translated:
         try:
-            text += _translated[0][2][1][0][0][5][0][0]
+            if len(_translated[0][2][1][0][0][5]) > 1:
+                for phrase in _translated[0][2][1][0][0][5]:
+                    text += ' ' + phrase[0]
+            else:
+                text += _translated[0][2][1][0][0][5][0][0]
         except:
             text += fix_trans_error(_translated)
         try:
             pron += unidecode.unidecode(_translated[0][2][1][0][0][1])
         except:
             pron += ''
+
+    text = text.strip()
 
     for _translated in translated:
         try:
@@ -118,7 +147,9 @@ def fix_trans_error(translated):
                 if len(translated[0][2][1]) > 0:
                     if len(translated[0][2][1][0]) > 0:
                         if len(translated[0][2][1][0][0]) > 5:
-                            if len(translated[0][2][1][0][0][5]) > 0:
+                            if translated[0][2][1][0][0][5] is None:
+                                text = translated[0][2][1][0][0][0]
+                            elif len(translated[0][2][1][0][0][5]) > 0:
                                 if len(translated[0][2][1][0][0][5][0]) > 0:
                                     text = translated[0][2][1][0][0][5][0][0]
                                 else:
@@ -138,4 +169,3 @@ def fix_trans_error(translated):
     else:
         text = translated
     return str(text)
-
