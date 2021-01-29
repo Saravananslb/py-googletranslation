@@ -59,20 +59,23 @@ def format_response(a):
             flag = not flag
             _b = 'pygoogletranslation'
         if flag:
-            # Code cleanup
-            _b = _b.replace('\\\\', '\\')
-            _b = _b.replace('\\ ', ' ')
-            _b = _b.replace('\\n', '\n')
-            _b = _b.replace('\\"', '"')
-
-
-            if '\\u' in _b:
+            # Parsing to cleanup "unescaped escaped" characters
+            if '\\' in _b:
                 _bp = ''
                 p = 0
                 while p < len(_b):
-                    if _b[p:p+2] == '\\u':
-                        _bp += bytes(_b[p:p+6], 'ascii').decode('unicode-escape')
-                        p += 6
+                    if _b[p:p+2] == '\\\\':
+                        _bp += '\\'
+                        p += 2
+                    elif _b[p:p+1] == '\\':
+                        if _b[p:p+2] == '\\u':
+                            _bp += bytes(_b[p:p+6], 'ascii').decode('unicode-escape')
+                            p += 6
+                        elif _b[p:p+2] == '\\n':
+                            _bp += '\n'
+                            p += 2
+                        else:
+                            p += 1
                     else:
                         _bp += _b[p:p+1]
                         p += 1
@@ -144,7 +147,9 @@ def fix_trans_error(translated):
                 if len(translated[0][2][1]) > 0:
                     if len(translated[0][2][1][0]) > 0:
                         if len(translated[0][2][1][0][0]) > 5:
-                            if len(translated[0][2][1][0][0][5]) > 0:
+                            if translated[0][2][1][0][0][5] is None:
+                                text = translated[0][2][1][0][0][0]
+                            elif len(translated[0][2][1][0][0][5]) > 0:
                                 if len(translated[0][2][1][0][0][5][0]) > 0:
                                     text = translated[0][2][1][0][0][5][0][0]
                                 else:
