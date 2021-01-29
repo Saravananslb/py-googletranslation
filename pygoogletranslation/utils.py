@@ -64,7 +64,7 @@ def format_response(a):
             _b = _b.replace('\\\\', '\\')
             _b = _b.replace('\\"', '"')
             li_filter.append(_b)
-    fi_data = str(''.join(li_filter)).replace('","[', '",[').replace(']",null', '],null')
+    fi_data = str(''.join(li_filter)).replace('","[', '",[', 1).replace(']",null', '],null')
     li_data = json.loads(fi_data.rsplit('pygoogletranslation', 1)[-1])
     return li_data
 
