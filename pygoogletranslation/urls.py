@@ -2,6 +2,7 @@
 """
 Predefined URLs used to make google translate requests.
 """
+TRANSLATE = 'https://translate.googleapis.com/translate_a/'
 SERVICE_URLS = (
     'translate.google.ac', 'translate.google.ad', 'translate.google.ae',
     'translate.google.al', 'translate.google.am', 'translate.google.as',

@@ -27,8 +27,7 @@ class Translator:
             self.service_url = 'translate.google.com'
         else:
             self.service_url = service_url
-        self.host = 'https://{}/translate_a/'.format(
-            self.service_url.replace('google', 'googleapis'))
+        self.host = urls.TRANSLATE
         self.rpcids = RPCIDS
         self.transurl = 'https://{}/_/TranslateWebserverUi/data/batchexecute'.format(
             self.service_url)
