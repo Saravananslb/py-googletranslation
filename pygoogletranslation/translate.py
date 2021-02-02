@@ -21,16 +21,22 @@ from pygoogletranslation.models import Translated, Detected
 
 class Translator:
 
-    def __init__(self, host=urls.TRANSLATE, proxies=None, timeout=None,
-                retry=3, sleep=5, retry_messgae=False):
-        self.host = host if 'http' in host else 'https://' + host
+    def __init__(self, proxies=None, timeout=None,
+                 retry=3, sleep=5, retry_messgae=False, service_url='translate.google.com'):
+        if service_url not in urls.SERVICE_URLS:
+            self.service_url = 'translate.google.com'
+        else:
+            self.service_url = service_url
+        self.host = 'https://{}/translate_a/'.format(
+            self.service_url.replace('google', 'googleapis'))
         self.rpcids = RPCIDS
-        self.transurl = urls.TRANSLATEURL
+        self.transurl = 'https://{}/_/TranslateWebserverUi/data/batchexecute'.format(
+            self.service_url)
         if proxies is not None:
             self.proxies = proxies
         else:
             self.proxies = None
-        
+
         if timeout is not None:
             self.timeout = timeout
 
@@ -53,7 +59,7 @@ class Translator:
             text = text.replace("'", "")
             text = text.replace("“", "")
             text = text.replace("”", "")
-        
+
         if src != 'auto':
             if src.lower() in LANGCODES:
                 src = LANGCODES[src]
@@ -73,7 +79,6 @@ class Translator:
         data = self._translate(text, src=src, dest=dest)
         return self.extract_translation(data, text)
 
-    
     def extract_translation(self, _data, text, src='auto', dest='en'):
         if type(text) != list:
             text = [text]
@@ -162,7 +167,7 @@ class Translator:
         result = Detected(lang=src, confidence=confidence)
 
         return result
-          
+
     def _translate(self, text, src, dest):
         """ Generate Token for each Translation and post requset to
         google web api translation and return an response
@@ -172,7 +177,7 @@ class Translator:
 
         """
         if type(text) != list:
-            text = [text]        
+            text = [text]
         translated_list = []
         url = self.transurl
         params = utils.format_param(self.rpcids)
@@ -180,8 +185,10 @@ class Translator:
             trans_list = []
             tokenized_text = utils.tokenize_sentence(_text)
             for _tokenized_text in tokenized_text:
-                data = utils.format_data(self.rpcids, _tokenized_text, src, dest)
-                response = requests.request("POST", url, data=data, params=params, proxies=self.proxies)
+                data = utils.format_data(
+                    self.rpcids, _tokenized_text, src, dest)
+                response = requests.request(
+                    "POST", url, data=data, params=params, proxies=self.proxies)
                 if response.status_code == 200:
                     _format_data = utils.format_response(str(response.text))
                     trans_list.append(_format_data)
@@ -189,7 +196,8 @@ class Translator:
                     _format_data = self.retry_request(data, params)
                     trans_list.append(_format_data)
                 else:
-                    raise Exception('Unexpected status code {} from {}'.format(response.status_code, self.transurl))
+                    raise Exception('Unexpected status code {} from {}'.format(
+                        response.status_code, self.transurl))
                     return False
             translated_list.append(utils.format_translation(trans_list))
         return translated_list
@@ -202,7 +210,8 @@ class Translator:
         """
         retry = self.retry
         sleep = self.sleep
-        response = requests.request("POST", url=self.transurl, data=data, params=params, proxies=self.proxies)
+        response = requests.request(
+            "POST", url=self.transurl, data=data, params=params, proxies=self.proxies)
         for i in range(0, retry):
             if response.status_code == 200:
                 _format_data = utils.format_response(str(response.text))
@@ -213,9 +222,11 @@ class Translator:
                 time.sleep(sleep)
                 sleep = i * sleep
             else:
-                raise Exception('Unexpected status code {} from {}'.format(response.status_code, self.transurl))
+                raise Exception('Unexpected status code {} from {}'.format(
+                    response.status_code, self.transurl))
                 return False
-        raise Exception('Unexpected status code {} from {} after retried {} loop with {}s delay'.format(response.status_code, self.transurl, retry, self.sleep))
+        raise Exception('Unexpected status code {} from {} after retried {} loop with {}s delay'.format(
+            response.status_code, self.transurl, retry, self.sleep))
 
     def bulktranslate(self, file, src='auto', dest='en'):
         """Translation from document (.doc, .docx, .pdf, .txt):
@@ -240,7 +251,7 @@ class Translator:
                 dest = dest
             else:
                 raise ValueError('invalid destination language')
-        
+
         if not os.path.exists(file):
             raise FileNotFoundError('file {} does not exists !'.format(file))
 
@@ -253,21 +264,22 @@ class Translator:
             _file.close()
         elif file.endswith('.pdf'):
             text = ''
-            pdfFileObj = open(file, 'rb') 
-            pdfReader = PyPDF2.PdfFileReader(pdfFileObj) 
+            pdfFileObj = open(file, 'rb')
+            pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
             for i in range(0, pdfReader.numPages):
-                pageObj = pdfReader.getPage(0) 
+                pageObj = pdfReader.getPage(0)
                 text += pageObj.extractText()
-            pdfFileObj.close() 
+            pdfFileObj.close()
         else:
-            raise FileNotFoundError('unsupported file format .{}.'.format(file.split('.'))[len(file.split('.') - 1)])
+            raise FileNotFoundError('unsupported file format .{}.'.format(
+                file.split('.'))[len(file.split('.') - 1)])
         text = text.replace('"', '')
         text = text.replace("'", "")
         text = text.replace("“", "")
         text = text.replace("”", "")
         data = self._translate(text, src=src, dest=dest)
         return self.extract_translation(data, text)
-  
+
     def glanguage(self):
         """ Get request from google and return language and their lang codes.
         Example:
@@ -289,10 +301,12 @@ class Translator:
             }
         """
         querystring = utils.format_querystringlang()
-        response = requests.get(url=self.host + 'l', params=querystring, proxies=self.proxies)
+        response = requests.get(url=self.host + 'l',
+                                params=querystring, proxies=self.proxies)
         if response.status_code == 200:
             glang = json.loads(response.content)
             return glang
         else:
-            raise Exception('Unexpected status code {} from {}'.format(response.status_code, self.host))
+            raise Exception('Unexpected status code {} from {}'.format(
+                response.status_code, self.host))
             return False

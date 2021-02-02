@@ -16,20 +16,23 @@ def get_file(*paths):
 
 
 def get_version():
-    init_py = get_file(os.path.dirname(__file__), 'pygoogletranslation', '__init__.py')
+    init_py = get_file(os.path.dirname(__file__),
+                       'pygoogletranslation', '__init__.py')
     pattern = r"{0}\W*=\W*'([^']+)'".format('__version__')
     version, = re.findall(pattern, init_py)
     return version
 
 
 def get_description():
-    init_py = get_file(os.path.dirname(__file__), 'pygoogletranslation', '__init__.py')
+    init_py = get_file(os.path.dirname(__file__),
+                       'pygoogletranslation', '__init__.py')
     pattern = r'"""(.*?)"""'
     description, = re.findall(pattern, init_py, re.DOTALL)
     return description
 
+
 this_directory = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+with open(os.path.join(this_directory, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 # def get_readme():
@@ -42,11 +45,11 @@ def install():
         version=get_version(),
         description=get_description(),
         long_description=long_description,
-        long_description_content_type='text/markdown',
+        long_description_content_type='text/rst',
         license='MIT',
-        author='Saravanan N, Jenifer Singh Y S',
-        author_email='saravananslb2015@gmail.com',
-        url='https://github.com/Saravananslb/py-googletranslation',
+        author='superjavascrip',
+        author_email='lronman1008000@gmail.com',
+        url='https://github.com/superjavascrip/py-googletranslation',
         classifiers=['Development Status :: 5 - Production/Stable',
                      'Intended Audience :: Education',
                      'Intended Audience :: End Users/Desktop',
@@ -66,12 +69,12 @@ def install():
             'docx2txt',
             'PyPDF2',
         ],
-        python_requires= '>=3.6',
+        python_requires='>=3.6',
         tests_require=[
             'pytest',
             'coveralls',
         ],
-        
+
     )
 
 
