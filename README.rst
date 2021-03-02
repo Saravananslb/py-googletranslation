@@ -91,7 +91,7 @@ You can use proxies in the translation.
 .. code:: python
 
     >>> from pygoogletranslation import Translator
-    >> proxy = {"http":"http://sampleproxy.com:80"}
+    >>> proxy = {"http":"http://sampleproxy.com:80"}
     >>> translator = Translator(proxies=proxy)
 
 Advanced Usage (Bulk)
