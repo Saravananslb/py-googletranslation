@@ -1,6 +1,8 @@
 import re
 import requests
+import math
 from pygoogletranslation import urls
+
 
 class TokenAcquirer:
     """Google Translate API token generator
@@ -28,8 +30,12 @@ class TokenAcquirer:
         464393.115905
     """
 
-    def __init__(self, tkk='0', tkk_url=urls.TOKEN, proxies=None):
-
+    def __init__(self, tkk='0', service_url='translate.google.com', proxies=None):
+        if service_url not in urls.SERVICE_URLS:
+            self.service_url = 'translate.google.com'
+        else:
+            self.service_url = service_url
+        tkk_url = 'https://{}/translate_a/element.js'.format()
         if proxies is not None:
             self.proxies = proxies
         else:
@@ -38,7 +44,8 @@ class TokenAcquirer:
         r = requests.get(tkk_url, proxies=self.proxies)
 
         if r.status_code == 200:
-            re_tkk = re.search("(?<=tkk=\\')[0-9.]{0,}", str(r.content.decode("utf-8")))            
+            re_tkk = re.search(
+                "(?<=tkk=\\')[0-9.]{0,}", str(r.content.decode("utf-8")))
             if re_tkk:
                 self.tkk = re_tkk.group(0)
             else:
@@ -46,18 +53,17 @@ class TokenAcquirer:
         else:
             self.tkk = '0'
 
-
     def _xr(self, a, b):
-            size_b = len(b)
-            c = 0
-            while c < size_b - 2:
-                d = b[c + 2]
-                d = ord(d[0]) - 87 if 'a' <= d else int(d)
-                d = self.rshift(a, d) if '+' == b[c + 1] else a << d
-                a = a + d & 4294967295 if '+' == b[c] else a ^ d
+        size_b = len(b)
+        c = 0
+        while c < size_b - 2:
+            d = b[c + 2]
+            d = ord(d[0]) - 87 if 'a' <= d else int(d)
+            d = self.rshift(a, d) if '+' == b[c + 1] else a << d
+            a = a + d & 4294967295 if '+' == b[c] else a ^ d
 
-                c += 3
-            return a
+            c += 3
+        return a
 
     def acquire(self, text):
         a = []
@@ -95,7 +101,8 @@ class TokenAcquirer:
                     if (l & 64512) == 55296 and g + 1 < size and \
                             a[g + 1] & 64512 == 56320:
                         g += 1
-                        l = 65536 + ((l & 1023) << 10) + (a[g] & 1023)  # This bracket is important
+                        # This bracket is important
+                        l = 65536 + ((l & 1023) << 10) + (a[g] & 1023)
                         e.append(l >> 18 | 240)
                         e.append(l >> 12 & 63 | 128)
                     else:
@@ -118,11 +125,7 @@ class TokenAcquirer:
         tk = self.acquire(text)
         return tk
 
-    
     def rshift(self, val, n):
         """python port for '>>>'(right shift with padding)
         """
         return (val % 0x100000000) >> n
-
-        
-
